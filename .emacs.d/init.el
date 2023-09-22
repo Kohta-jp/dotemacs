@@ -289,6 +289,7 @@
 ;;   :config
 ;;   (load-theme 'metalheart t))
 
+
 (leaf zenburn-theme
   :ensure t
   :config
@@ -374,6 +375,35 @@
   :custom
   (nerd-icons-font-family "HackGen Console NF")
   )
+
+
+;; term settings
+;; ---------------------------------------------------------------------
+(leaf multi-term
+  :disabled (eq system-type 'windows-nt)
+  :ensure t
+  :custom `((multi-term-program . ,(getenv "SHELL")))
+  :preface
+  (defun namn/open-shell-sub (new)
+   (split-window-below)
+   (enlarge-window 5)
+   (other-window 1)
+   (let ((term) (res))
+     (if (or new (null (setq term (dolist (buf (buffer-list) res)
+                                    (if (string-match "*terminal<[0-9]+>*" (buffer-name buf))
+                                        (setq res buf))))))
+         (multi-term)
+       (switch-to-buffer term))))
+  (defun namn/open-shell ()
+    (interactive)
+    (namn/open-shell-sub t))
+  (defun namn/to-shell ()
+    (interactive)
+    (namn/open-shell-sub nil))
+  :bind (("C-^"   . namn/to-shell)
+         ("C-M-^" . namn/open-shell)
+         (:term-raw-map
+          ("C-t" . other-window))))
 
 ;; Compile Settings
 
