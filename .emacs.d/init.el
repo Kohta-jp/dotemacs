@@ -361,7 +361,7 @@
   :blackout t
   :hook ((prog-mode-hook . highlight-indent-guides-mode))
   :custom (
-           (highlight-indent-guides-method . 'bitmap)
+           (highlight-indent-guides-method . 'character)
            (highlight-indent-guides-auto-enabled . t)
            (highlight-indent-guides-responsive . t)
            (highlight-indent-guides-character . ?\|)
@@ -373,9 +373,29 @@
 (leaf nerd-icons
   :ensure t
   :custom
-  (nerd-icons-font-family "HackGen Console NF")
+  (nerd-icons-font-family . "HackGen Console NF")
   )
 
+;; markdown settings
+
+(leaf markdown
+  :config
+  (leaf markdown-mode
+    :ensure t
+    :mode ("\\.md\\'" . markdown-mode)
+    :custom
+    (markdown-command . "multimarkdown")
+    (markdown-command-needs-filename . t))
+  (leaf markdown-preview-mode
+    :ensure t
+    ))
+
+;; exec path from shell settings
+
+(leaf exec-path-from-shell
+    :ensure t
+    :config
+    (exec-path-from-shell-initialize))
 
 ;; term settings
 ;; ---------------------------------------------------------------------
@@ -442,12 +462,6 @@
   ;(add-to-list 'default-frame-alist '(font . "JetBrains Mono-14"))
   )
 
-;; all-the-icons settings
-
-(leaf all-the-icons
-  :ensure t
-  :after doom-modeline
-  :custom (all-the-icons-scale-factor . 0.9))
 
 ;; ----------------------------------------------------------------------------------------------
 
