@@ -1,5 +1,3 @@
-
-
 ;;; init.el --- My init.el  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Naoya Yamashita
@@ -127,9 +125,9 @@
   :bind (c-mode-base-map
          ("C-c c" . compile))
   :mode-hook
-  (c-mode-hook . ((c-set-style "bsd")
+  (c-mode-hook . ((c-set-style "stroustrup")
                   (setq c-basic-offset 4)))
-  (c++-mode-hook . ((c-set-style "bsd")
+  (c++-mode-hook . ((c-set-style "stroustrup")
                     (setq c-basic-offset 4))))
 
 ;; delsel
@@ -215,28 +213,37 @@
   :config
   (leaf consult
     :ensure t
-    :bind (("C-c h" . consult-history)
-           ("C-c m" . consult-mode-command)
-           ("C-c b" . consult-bookmark)
+    :bind (;; C-c bindings
+           ("C-c h" . consult-history)
+           ("C-c M-x" . consult-mode-command)
            ("C-c k" . consult-kmacro)
+           ("C-c m" . consult-man)
+           ("C-c i" . consult-info)
+           ([remap Info-search] . consult-info)
+           ;; C-x bindings
            ("C-x M-:" . consult-complex-command)
            ("C-x b" . consult-buffer)
            ("C-x 4 b" . consult-buffer-other-window)
            ("C-x 5 b" . consult-buffer-other-frame)
+           ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
+           ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+           ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+           ;; Custom M-# bindings
            ("M-#" . consult-register-load)
            ("M-'" . consult-register-store)
            ("C-M-#" . consult-register)
+           ;; Other custom bindings
            ("M-y" . consult-yank-pop)
-           ("M-g a" . consult-apropos)
+           ;; M-g bindings
            ("M-g e" . consult-compile-error)
            ("M-g f" . consult-flymake)
            ("M-g g" . consult-goto-line)
-           ("M-g M-g" . consult-goto-line)
            ("M-g o" . consult-outline)
            ("M-g m" . consult-mark)
            ("M-g k" . consult-global-mark)
            ("M-g i" . consult-imenu)
            ("M-g I" . consult-imenu-multi)
+           ;; M-s bindings
            ("M-s f" . consult-find)
            ("M-s F" . consult-locate)
            ("M-s g" . consult-grep)
@@ -244,21 +251,19 @@
            ("M-s r" . consult-ripgrep)
            ("M-s l" . consult-line)
            ("M-s L" . consult-line-multi)
-           ("M-s m" . consult-multi-occur)
            ("M-s k" . consult-keep-lines)
            ("M-s u" . consult-focus-lines)
-           ("M-s e" . consult-isearch)
            ;; Isearch integration
-           ("M-s e" . consult-isearch-history)
-           (map isearch-mode-map
-           ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-           ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-           ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-           ("M-s L" . consult-line-multi))           ;; needed by consult-line to detect isearch
+           ;("M-s e" . consult-isearch-history)
+           (isearch-mode-map
+            ("M-e" . consult-isearch-history)        ;; orig. isearch-edit-string
+            ("M-s e" . consult-isearch-history)      ;; orig. isearch-edit-string
+            ("M-s l" . consult-line)                 ;; needed by consult-line to detect isearch
+            ("M-s L" . consult-line-multi))          ;; needed by consult-line to detect isearch
            ;; Minibuffer history
-           (map minibuffer-local-map
-           ("M-s" . consult-history)                 ;; orig. next-matching-history-element
-           ("M-r" . consult-history)))               ;; orig. previous-matching-history-element
+           (minibuffer-local-map
+            ("M-s" . consult-history)                ;; orig. next-matching-history-element
+            ("M-r" . consult-history))))             ;; orig. previous-matching-history-element
 
   (leaf orderless
     :doc "Completion style for matching regexps in any order"
