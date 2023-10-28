@@ -248,10 +248,17 @@
            ("M-s k" . consult-keep-lines)
            ("M-s u" . consult-focus-lines)
            ("M-s e" . consult-isearch)
-           (isearch-mode-map
-            ("M-s e" . consult-isearch)
-            ("M-s l" . consult-line)
-            ("M-s L" . consult-line-multi))))
+           ;; Isearch integration
+           ("M-s e" . consult-isearch-history)
+           (map isearch-mode-map
+           ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+           ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+           ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+           ("M-s L" . consult-line-multi))           ;; needed by consult-line to detect isearch
+           ;; Minibuffer history
+           (map minibuffer-local-map
+           ("M-s" . consult-history)                 ;; orig. next-matching-history-element
+           ("M-r" . consult-history)))               ;; orig. previous-matching-history-element
 
   (leaf orderless
     :doc "Completion style for matching regexps in any order"
