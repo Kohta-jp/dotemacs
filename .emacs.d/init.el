@@ -1,3 +1,5 @@
+
+
 ;;; init.el --- My init.el  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Naoya Yamashita
@@ -352,21 +354,7 @@
          ))
 
 ;; indent settings
-
-(leaf highlight-indent-guides
-  :doc "Highlight guide for indent"
-  :tag "indent"
-  :url "https://github.com/DarthFennec/highlight-indent-guides"
-  :ensure t
-  :blackout t
-  :hook ((prog-mode-hook . highlight-indent-guides-mode))
-  :custom (
-           (highlight-indent-guides-method . 'character)
-           (highlight-indent-guides-auto-enabled . t)
-           (highlight-indent-guides-responsive . t)
-           (highlight-indent-guides-character . ?\|)
-           (highlight-indent-guides-auto-character-face-perc . 20)
-           (highlight-indent-guides-auto-character-face . 15)))
+;; 2023-10-28 エラー多発により一旦削除
 
 ;; icon settings
 
@@ -388,6 +376,9 @@
     (markdown-command-needs-filename . t))
   (leaf markdown-preview-mode
     :ensure t
+    :config
+    ;; (add-to-list 'markdown-preview-stylesheets "https://raw.githubusercontent.com/richleland/pygments-css/master/emacs.css")
+    ;; (add-to-list 'markdown-preview-javascript "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML")
     ))
 
 ;; exec path from shell settings
