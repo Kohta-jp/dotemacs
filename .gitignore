@@ -3,3 +3,5 @@ elpa
 custom.elc
 init.elc
 kkcrc
+el-get
+.cache
