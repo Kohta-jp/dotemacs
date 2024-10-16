@@ -1,5 +1,5 @@
 ;;; init.el --- My init.el  -*- lexical-binding: t; -*-
-
+;; 
 ;; Copyright (C) 2020  Naoya Yamashita
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
@@ -296,6 +296,29 @@
 ;; Packages Settings
 ;; ----------------------------------------------------------------------------------------------
 
+(leaf copilot
+  :el-get (copilot
+           :type github
+           :pkgname "zerolfx/copilot.el"
+           )
+  :config
+  (leaf editorconfig
+    :ensure t
+    )
+  (leaf s
+    :ensure t
+    )
+  (leaf dash
+    :ensure t
+    )
+  (defun my/copilot-tab ()
+    (interactive)
+    (or (copilot-accept-completion)
+        (indent-for-tab-command)))
+
+  (with-eval-after-load 'copilot
+    (define-key copilot-mode-map (kbd "S-<tab>") #'my/copilot-tab))
+  )
 ;; theme settings
 
 ;; (leaf metalheart-theme
@@ -313,7 +336,7 @@
 ;;   :ensure t
 ;;   :config
 ;;   (iceberg-theme-create-theme-file)
-;;   (load-theme 'solarized-zenburn t))
+;;   (load-theme 'solarized-iceberg-dark t))
 
 ;; flycheck settings
 
@@ -392,6 +415,7 @@
     ;; (add-to-list 'markdown-preview-stylesheets "https://raw.githubusercontent.com/richleland/pygments-css/master/emacs.css")
     ;; (add-to-list 'markdown-preview-javascript "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML")
     ))
+
 
 ;; exec path from shell settings
 
