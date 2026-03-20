@@ -133,4 +133,14 @@ emacs -q -l ~/.debug.emacs.d/init.el
 ---
 
 ## License
-`init.el` のヘッダコメントに記載の通り、GPLv3 or later の表記があります（必要に応じてリポジトリ全体の LICENSE 整備も検討してください）。
+
+本リポジトリは `.emacs.d/init.el` のヘッダコメントに記載の通り、GNU General Public License v3.0 以降（GPL-3.0-or-later）の条件で利用できます。
+
+- This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+- You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+---
+
+## Thanks
+
+この設定のベースとなった `init.el` の著者であり、最も貢献度の高い **Naoya Yamashita（@conao3）** さんに感謝します。
