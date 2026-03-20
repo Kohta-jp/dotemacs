@@ -176,6 +176,12 @@
   :tag "builtin" "internal"
   :custom `((auto-save-list-file-prefix . ,(locate-user-emacs-file "backup/.saves-"))))
 
+;; frame setting
+(leaf frame
+  :config
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
+
+
 ;; ----------------------------------------------------------------------------------------------
 
 
@@ -296,6 +302,28 @@
 ;; Packages Settings
 ;; ----------------------------------------------------------------------------------------------
 
+;; Github
+;; copilot settings
+;; -----------------------
+
+(leaf copilot
+  :ensure t
+  :hook
+  (prog-mode-hook . copilot-mode)
+  :bind
+  (:copilot-completion-map
+   ("<tab>"   . copilot-accept-completion)
+   ("TAB"     . copilot-accept-completion)
+   ("C-<tab>" . copilot-accept-completion-by-word)
+   ("C-TAB"   . copilot-accept-completion-by-word)
+   ("C-n"     . copilot-next-completion)
+   ("C-p"     . copilot-previous-completion))
+  :custom
+  (copilot-indent-offset-warning-disable . t)
+  ;; 必要なら補完を出したくない major-mode を追加
+  ;; (copilot-major-mode-alist . '((text-mode . nil)))
+  )
+
 ;; theme settings
 
 ;; (leaf metalheart-theme
@@ -304,16 +332,16 @@
 ;;   (load-theme 'metalheart t))
 
 
-(leaf zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-
-;; (leaf iceberg-theme
+;; (leaf zenburn-theme
 ;;   :ensure t
 ;;   :config
-;;   (iceberg-theme-create-theme-file)
-;;   (load-theme 'solarized-zenburn t))
+;;   (load-theme 'zenburn t))
+
+(leaf iceberg-theme
+  :ensure t
+  :config
+  (iceberg-theme-create-theme-file)
+  (load-theme 'solarized-iceberg-dark t))
 
 ;; flycheck settings
 
@@ -353,21 +381,25 @@
            (company-minimum-prefix-length . 1)
            (company-show-numbers . t)
            (company-selection-wrap-around . t)
+
            (company-transformers . '(company-sort-by-occurrence)))
   :global-minor-mode global-company-mode)
 
-;; neotree settings
+;; langeage and font settings
+;; ----------------------------------------------------------------------------------------------
 
-(leaf neotree
-  :ensure t
-  :custom ((neo-theme . 'arrow)
-           (neo-show-hidden-files . t))
-  :bind (("<f8>" . neotree-toggle)
-         ))
+(leaf *language-settings
+  :config
+  ;(set-language-environment 'Japanese) ;言語を日本語に
+  (prefer-coding-system 'utf-8) ;極力UTF-8を使う
+  ;;(font-family-list)
+  (add-to-list 'default-frame-alist '(font . "HackGen Console NF-16"));フォント設定 "font-size"
+  ;(add-to-list 'default-frame-alist '(font . "JetBrains Mono-14"))
+  )
 
-;; indent settings
-;; 2023-10-28 エラー多発により一旦削除
-
+;; ex) neotree used HackGen Nerd Font
+;; "HackGen Console NF" / "HackGen35 Console NF"
+;; Neotree settings
 ;; icon settings
 
 (leaf nerd-icons
@@ -375,6 +407,22 @@
   :custom
   (nerd-icons-font-family . "HackGen Console NF")
   )
+
+;; neotree settings
+(leaf neotree
+  :ensure t
+  :after nerd-icons
+  :bind (("<f8>" . neotree-toggle))
+  :custom
+  (neo-theme . 'nerd-icons)
+  (neo-smart-open . t)
+  (neo-show-hidden-files . t)
+  (neo-window-width . 32)
+  )
+
+;; indent settings
+;; 2023-10-28 エラー多発により一旦削除
+
 
 ;; markdown settings
 
@@ -453,17 +501,6 @@
 
 
 
-;; langeage and font settings
-;; ----------------------------------------------------------------------------------------------
-
-(leaf *language-settings
-  :config
-  ;(set-language-environment 'Japanese) ;言語を日本語に
-  (prefer-coding-system 'utf-8) ;極力UTF-8を使う
-  ;;(font-family-list)
-  (add-to-list 'default-frame-alist '(font . "HackGen Console NF-14"));フォント設定 "font-size"
-  ;(add-to-list 'default-frame-alist '(font . "JetBrains Mono-14"))
-  )
 
 
 ;; ----------------------------------------------------------------------------------------------
@@ -471,6 +508,10 @@
 
 ;; Line Setting
 ;; ----------------------------------------------------------------------------------------------
+(leaf emacs
+  :custom
+  (line-spacing . 0.3)
+  )
 
 ;; 行番号の設定
 (leaf *line-settings
