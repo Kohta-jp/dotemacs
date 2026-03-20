@@ -3,8 +3,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(auto-async-byte-compile multi-term exec-path-from-shell markdown-preview-mode markdown-mode nerd-icons neotree company flycheck zenburn-theme marginalia vertico orderless consult doom-modeline blackout el-get hydra leaf-keywords)))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
